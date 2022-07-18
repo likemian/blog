@@ -2,28 +2,21 @@
 
   <el-container>
       <el-header>Header</el-header>
-      <el-aside width="20%">
+      <el-aside width="25%">
           <el-menu :default-openeds="['1']">
-              <el-submenu index="1">
+              <el-submenu
+                  v-for="menu in menuList"
+                  :index='`${menu.id}`'
+              >
                   <template #title>
-                      <el-icon><Menu />导航一</el-icon>
+                      <el-icon><Menu />{{menu.menuName}}</el-icon>
                   </template>
-                  <el-menu-item index="1-1">1.选项1</el-menu-item>
-                  <el-menu-item index="1-2">1.选项2</el-menu-item>
-                  <el-menu-item index="1-3">1.选项3</el-menu-item>
-                  <el-menu-item index="1-4">1.选项4</el-menu-item>
-              </el-submenu>
-              <el-submenu index="2">
-                  <template #title>
-                      <el-icon>
-                          <Menu />
-                          导航二
-                      </el-icon>
-                  </template>
-                  <el-menu-item index="2-1">2.选项1</el-menu-item>
-                  <el-menu-item index="2-2">2.选项2</el-menu-item>
-                  <el-menu-item index="2-3">2.选项3</el-menu-item>
-                  <el-menu-item index="2-4">2.选项4</el-menu-item>
+                  <el-menu-item
+                      v-for="subMenu in menu.subMenuList"
+                      :index="`${menu.id}`+'-'+`${subMenu.id}`"
+                  >
+                      {{subMenu.name}}
+                  </el-menu-item>
               </el-submenu>
           </el-menu>
       </el-aside>
@@ -34,7 +27,33 @@
 <script>
 import {Menu, UserFilled} from "@element-plus/icons";
 export default {
-    components: {Menu, UserFilled}
+    components: {Menu, UserFilled},
+    data () {
+        return {
+            menuList: [
+                {
+                    'id': 1,
+                    'menuName': '导航一',
+                    'subMenuList': [
+                        {id: 1, name: '选项5'},
+                        {id: 2, name: '选项2'},
+                        {id: 3, name: '选项3'},
+                        {id: 4, name: '选项4'},
+                    ]
+                },
+                {
+                    'id': 2,
+                    'menuName': '导航二',
+                    'subMenuList': [
+                        {id: 1, name: '选项1'},
+                        {id: 2, name: '选项2'},
+                        {id: 3, name: '选项3'},
+                        {id: 4, name: '选项4'},
+                    ]
+                },
+            ],
+        }
+    },
 }
 </script>
 <style>
